@@ -1,24 +1,220 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1a8c0f54-2a4b-44e4-ac67-47e804f45c6c</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Wake on LAN</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-    <meta property="og:title" content="1a8c0f54-2a4b-44e4-ac67-47e804f45c6c" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen, Ubuntu, Cantarell, sans-serif;
+                background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+            }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+            .container {
+                text-align: center;
+                padding: 2rem;
+            }
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+            h1 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            .device-info {
+                font-size: 1.2rem;
+                color: #94a3b8;
+                margin-bottom: 3rem;
+            }
+
+            .device-info div {
+                margin: 0.5rem 0;
+            }
+
+            .button-container {
+                perspective: 1000px;
+                margin: 2rem 0;
+            }
+
+            .power-button {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                border: none;
+                background: linear-gradient(145deg, #dc2626, #991b1b);
+                box-shadow:
+                    0 10px 30px rgba(220, 38, 38, 0.4),
+                    inset 0 -5px 10px rgba(0, 0, 0, 0.3),
+                    inset 0 5px 10px rgba(255, 255, 255, 0.1);
+                cursor: pointer;
+                transition: all 0.3s ease;
+                position: relative;
+                transform-style: preserve-3d;
+            }
+
+            .power-button:hover {
+                transform: translateY(-5px);
+                box-shadow:
+                    0 15px 40px rgba(220, 38, 38, 0.5),
+                    inset 0 -5px 10px rgba(0, 0, 0, 0.3),
+                    inset 0 5px 10px rgba(255, 255, 255, 0.1);
+            }
+
+            .power-button:active {
+                transform: translateY(0);
+                box-shadow:
+                    0 5px 15px rgba(220, 38, 38, 0.3),
+                    inset 0 5px 10px rgba(0, 0, 0, 0.4);
+            }
+
+            .power-button.online {
+                background: linear-gradient(145deg, #22c55e, #16a34a);
+                box-shadow:
+                    0 10px 30px rgba(34, 197, 94, 0.4),
+                    inset 0 -5px 10px rgba(0, 0, 0, 0.3),
+                    inset 0 5px 10px rgba(255, 255, 255, 0.1);
+            }
+
+            .power-button.online:hover {
+                box-shadow:
+                    0 15px 40px rgba(34, 197, 94, 0.5),
+                    inset 0 -5px 10px rgba(0, 0, 0, 0.3),
+                    inset 0 5px 10px rgba(255, 255, 255, 0.1);
+            }
+
+            .power-button.waking {
+                background: linear-gradient(145deg, #f59e0b, #d97706);
+                animation: pulse 1.5s ease-in-out infinite;
+            }
+
+            .power-icon {
+                font-size: 80px;
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            }
+
+            .status {
+                margin-top: 2rem;
+                font-size: 1.5rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            .status.offline {
+                color: #ef4444;
+                text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+            }
+
+            .status.online {
+                color: #22c55e;
+                text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+            }
+
+            .status.waking {
+                color: #f59e0b;
+                text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+            }
+
+            .indicator {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                display: inline-block;
+                margin-left: 10px;
+                box-shadow: 0 0 15px currentColor;
+            }
+
+            .indicator.offline {
+                background: #ef4444;
+            }
+
+            .indicator.online {
+                background: #22c55e;
+                animation: blink 2s ease-in-out infinite;
+            }
+
+            .indicator.waking {
+                background: #f59e0b;
+                animation: blink 0.5s ease-in-out infinite;
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+                }
+                50% {
+                    box-shadow: 0 10px 50px rgba(245, 158, 11, 0.7);
+                }
+            }
+
+            @keyframes blink {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.4;
+                }
+            }
+
+            .message {
+                margin-top: 1rem;
+                font-size: 1rem;
+                color: #94a3b8;
+                min-height: 1.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Wake on LAN</h1>
+
+            <div class="device-info" id="deviceInfo">
+                <div>
+                    <strong>Device:</strong>
+                    <span id="deviceName">Loading...</span>
+                </div>
+                <div>
+                    <strong>MAC:</strong> <span id="deviceMac">Loading...</span>
+                </div>
+                <div>
+                    <strong>IP:</strong> <span id="deviceIp">Loading...</span>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button
+                    class="power-button"
+                    id="powerButton"
+                    onclick="togglePower()"
+                >
+                    <span class="power-icon">⚡</span>
+                </button>
+            </div>
+
+            <div class="status offline" id="status">
+                Offline
+                <span class="indicator offline" id="indicator"></span>
+            </div>
+
+            <div class="message" id="message"></div>
+        </div>
+
+        <script src="app.js"></script>
+    </body>
 </html>
