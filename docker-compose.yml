@@ -1,26 +1,26 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  wol-backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
-    container_name: wol-backend
-    restart: unless-stopped
-    network_mode: host
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
+    wol-backend:
+        build:
+            context: .
+            dockerfile: Dockerfile.backend
+        container_name: wol-backend
+        restart: unless-stopped
+        network_mode: host
+        environment:
+            - NODE_ENV=production
+            - PORT=3000
 
-  wol-frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: wol-frontend
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    depends_on:
-      - wol-backend
-    extra_hosts:
-      - "wol-backend:host-gateway"
+    wol-frontend:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: wol-frontend
+        restart: unless-stopped
+        # ports:
+        #   - "80:80"
+        depends_on:
+            - wol-backend
+        extra_hosts:
+            - "wol-backend:host-gateway"
