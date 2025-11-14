@@ -2,6 +2,10 @@
 
 Simple, lightweight web interface to wake network devices using Wake-on-LAN magic packets.
 
+<p align="center">
+  <img src="https://github.com/ratataque/WOL-webview/blob/main/preview.png" alt="WoL Interface Preview" width="600"/>
+</p>
+
 ## ✨ Features
 
 - 🎨 Beautiful 3D animated power button
