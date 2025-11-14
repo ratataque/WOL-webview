@@ -9,7 +9,7 @@ Simple, lightweight web interface to wake network devices using Wake-on-LAN magi
 - Real-time status indicator
 - Minimal dependencies (Express + wake_on_lan)
 
-![preview](https://github.com/ratataque/WOL-webview/preview.png)
+![preview](https://github.com/ratataque/WOL-webview/blob/main/preview.png)
 
 ## Files
 
