@@ -1,7 +1,7 @@
 // Device configuration - edit these values
 const DEVICE_NAME = "Gaming PC";
 const DEVICE_IP = "192.168.1.85";
-const DEVICE_MAC = "00:11:22:33:44:55";
+const DEVICE_MAC = "00:D8:61:56:3F:41";
 
 let isOnline = false;
 let isWaking = false;
@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("deviceName").textContent = DEVICE_NAME;
     document.getElementById("deviceMac").textContent = DEVICE_MAC;
     document.getElementById("deviceIp").textContent = DEVICE_IP;
+    
+    // Attach click handler to button
+    document.getElementById("powerButton").addEventListener("click", togglePower);
 });
 
 function updateUI(state) {

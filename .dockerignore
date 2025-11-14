@@ -2,3 +2,7 @@ node_modules
 npm-debug.log
 .git
 .env
+dist
+bun.lockb
+package-lock.json
+server/node_modules
