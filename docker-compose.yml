@@ -10,7 +10,7 @@ services:
         network_mode: host
         environment:
             - NODE_ENV=production
-            - PORT=3000
+            - PORT=3039
 
     wol-frontend:
         build:
